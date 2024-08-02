@@ -28,3 +28,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v0
+        with:
+          credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
