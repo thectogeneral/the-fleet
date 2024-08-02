@@ -17,4 +17,4 @@
 # Node.js dependencies:
 node_modules/
 
-./infra-setup/vm-setup/auth.json
+./auth.json
