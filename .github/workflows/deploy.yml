@@ -63,5 +63,5 @@ jobs:
             cd ~/app
             npm install  # Install project dependencies
             pm2 stop all || true
-            pm2 start server.js
+            pm2 start index.js
           EOF
