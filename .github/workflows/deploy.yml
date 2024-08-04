@@ -44,7 +44,19 @@ jobs:
 
       - name: Copy files to EC2
         run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude 'node_modules' ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude 'node_modules' ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/fleet-managment-system
+
+      - name: Set Environment Variables on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            echo 'export NODE_ENV=${{ secrets.NODE_ENV }}' >> ~/.bashrc
+            echo 'export DB_USERNAME=${{ secrets.DB_USERNAME }}' >> ~/.bashrc
+            echo 'export DB_PASSWORD=${{ secrets.DB_PASSWORD }}' >> ~/.bashrc
+            echo 'export DB_NAME=${{ secrets.DB_NAME }}' >> ~/.bashrc
+            echo 'export DB_HOST=${{ secrets.DB_HOST }}' >> ~/.bashrc
+            echo 'export PORT=${{ secrets.PORT }}' >> ~/.bashrc
+            source ~/.bashrc
+          EOF
 
       - name: SSH and deploy
         run: |
@@ -60,8 +72,8 @@ jobs:
             fi
 
             # Deployment commands
-            cd ~/app
+            cd ~/fleet-managment-system
             npm install  # Install project dependencies
             pm2 stop all || true
-            pm2 start server.js
+            pm2 start index.js
           EOF
