@@ -42,8 +42,8 @@ jobs:
           echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-          - name: Archive application files
-          run: tar -czf app.tar.gz .
+      - name: Archive application files
+        run: tar -czf app.tar.gz .
 
       - name: Copy archive to EC2
         run: |
