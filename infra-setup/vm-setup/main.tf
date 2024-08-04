@@ -11,6 +11,9 @@ terraform {
 
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
+variable "db_name" {}
+variable "db_username" {}
+variable "db_password" {}
 
 # Provider configuration
 provider "aws" {
@@ -131,9 +134,9 @@ resource "aws_db_instance" "postgres" {
   engine               = "postgres"
   engine_version       = "16.3"
   instance_class       = "db.t3.micro"
-  db_name                 = "mydatabase"
-  username             = "powerlabsadmin"
-  password             = "admin123"
+  db_name              = var.db_name
+  username             = var.db_username
+  password             = var.db_password
   parameter_group_name = "default.postgres16"
   skip_final_snapshot  = true
   publicly_accessible  = true
