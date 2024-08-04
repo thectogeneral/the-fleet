@@ -44,7 +44,7 @@ jobs:
 
       - name: Copy files to EC2
         run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude 'node_modules' ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude 'node_modules' ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/fleet-managment-system
 
       - name: Set Environment Variables on EC2
         run: |
@@ -72,7 +72,7 @@ jobs:
             fi
 
             # Deployment commands
-            cd ~/app
+            cd ~/fleet-managment-system
             npm install  # Install project dependencies
             pm2 stop all || true
             pm2 start index.js
