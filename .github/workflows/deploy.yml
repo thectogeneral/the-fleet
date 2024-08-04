@@ -1,0 +1,79 @@
+name: Fleet Monitoring system
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: us-east-2
+
+      - name: Prepare SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Copy files to EC2
+        run: |
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude 'node_modules' ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/fleet-managment-system
+
+      - name: Set Environment Variables on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            echo 'export NODE_ENV=${{ secrets.NODE_ENV }}' >> ~/.bashrc
+            echo 'export DB_USERNAME=${{ secrets.DB_USERNAME }}' >> ~/.bashrc
+            echo 'export DB_PASSWORD=${{ secrets.DB_PASSWORD }}' >> ~/.bashrc
+            echo 'export DB_NAME=${{ secrets.DB_NAME }}' >> ~/.bashrc
+            echo 'export DB_HOST=${{ secrets.DB_HOST }}' >> ~/.bashrc
+            echo 'export PORT=${{ secrets.PORT }}' >> ~/.bashrc
+            source ~/.bashrc
+          EOF
+
+      - name: SSH and deploy
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            if ! command -v npm &> /dev/null; then
+              echo "npm could not be found, installing..."
+              sudo apt update && sudo apt install -y nodejs npm
+            fi
+
+            if ! command -v pm2 &> /dev/null; then
+              echo "pm2 could not be found, installing..."
+              sudo npm install -g pm2
+            fi
+
+            # Deployment commands
+            cd ~/fleet-managment-system
+            npm install  # Install project dependencies
+            pm2 stop all || true
+            pm2 start index.js
+          EOF
