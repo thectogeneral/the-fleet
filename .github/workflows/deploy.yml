@@ -49,8 +49,19 @@ jobs:
       - name: SSH and deploy
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            if ! command -v npm &> /dev/null; then
+              echo "npm could not be found, installing..."
+              sudo apt update && sudo apt install -y nodejs npm
+            fi
+
+            if ! command -v pm2 &> /dev/null; then
+              echo "pm2 could not be found, installing..."
+              sudo npm install -g pm2
+            fi
+
+            # Deployment commands
             cd ~/app
-            npm install
+            npm install  # Install project dependencies
             pm2 stop all || true
             pm2 start server.js
           EOF
