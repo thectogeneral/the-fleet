@@ -7,7 +7,7 @@ const { sequelize } = require('../src/models');
 
 const app = express();
 app.use(express.json());
-app.use('/api/v1', sensorRouter);
+app.use('/', sensorRouter);
 
 beforeAll(async () => {
   await sequelize.sync({ force: true }); // Ensure the database is in a clean state
@@ -20,7 +20,7 @@ afterAll(async () => {
 describe('Test Sensor Routes', () => {
   it('should insert sensor data', async () => {
     const response = await request(app)
-      .post('/api/v1/sensor-data')
+      .post('/sensor-data')
       .send({
         vehicle_id: 'vehicle123',
         timestamp: '2024-08-04T12:00:00Z',
@@ -34,7 +34,7 @@ describe('Test Sensor Routes', () => {
   it('should get sensor data', async () => {
     // First, insert data to fetch
     await request(app)
-      .post('/api/v1/sensor-data')
+      .post('/sensor-data')
       .send({
         vehicle_id: 'vehicle123',
         timestamp: '2024-08-04T12:00:00Z',
@@ -43,7 +43,7 @@ describe('Test Sensor Routes', () => {
       });
 
     const response = await request(app)
-      .get('/api/v1/sensor-data')
+      .get('/sensor-data')
       .query({
         vehicle_id: 'vehicle123'
       });

@@ -9,18 +9,53 @@ terraform {
   required_version = ">= 1.2.0"
 }
 
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
-variable "db_name" {}
-variable "db_username" {}
-variable "db_password" {}
-variable "db_identifier" {}
+variable "aws_access_key" {
+  description = "AWS access key"
+  type        = string
+  sensitive   = true
+}
+
+variable "aws_secret_key" {
+  description = "AWS secret key"
+  type        = string
+  sensitive   = true
+}
+
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+  sensitive   = true
+}
+
+variable "db_name" {
+  description = "Database name"
+  type        = string
+}
+
+variable "db_username" {
+  description = "Database username"
+  type        = string
+  sensitive   = true
+}
+
+variable "db_password" {
+  description = "Database password"
+  type        = string
+  sensitive   = true
+}
+
+variable "db_identifier" {
+  description = "Database identifier"
+  type        = string
+  sensitive   = true
+}
+
 
 # Provider configuration
 provider "aws" {
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
-  region     = "us-east-1"
+  region     = var.aws_region
 }
 
 # Create a VPC

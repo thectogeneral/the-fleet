@@ -3,7 +3,7 @@ const { insertSensorData, getSensorData } = require('../controllers/sensorDataCo
 
 const sensorRouter = Router();
 
-sensorRouter.post("/sensor-data", insertSensorData);
-sensorRouter.get("/sensor-data", getSensorData);
+sensorRouter.post("/", insertSensorData);
+sensorRouter.get("/", getSensorData);
 
 module.exports = { sensorRouter };

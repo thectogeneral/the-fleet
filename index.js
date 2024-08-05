@@ -7,7 +7,7 @@ const { sequelize } = require('./src/models');
 const app = express();
 app.use(express.json());
 
-app.use("/api/v1", sensorRouter);
+app.use("/sensor-data", sensorRouter);
 
 app.get('/', (req, res) => {
     res.send("Fleet Managment System");
