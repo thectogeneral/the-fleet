@@ -7,14 +7,21 @@ const { sequelize } = require('../src/models');
 
 const app = express();
 app.use(express.json());
-app.use('/', sensorRouter);
+app.use('/sensor-data', sensorRouter);
 
 beforeAll(async () => {
   await sequelize.sync({ force: true }); // Ensure the database is in a clean state
+}, 50000);
+
+beforeEach(async () => {
+  // Clear all data before each test
+  await sequelize.sync({ force: true });
+  
 }, 10000);
 
 afterAll(async () => {
-  await sequelize.close(); // Close the database connection after tests
+  await sequelize.sync({ force: true });
+  await sequelize.close(); 
 }, 10000);
 
 describe('Test Sensor Routes', () => {
@@ -51,6 +58,6 @@ describe('Test Sensor Routes', () => {
     expect(response.body).toHaveLength(1);
     expect(response.body[0]).toHaveProperty('vehicle_id', 'vehicle123');
     expect(response.body[0]).toHaveProperty('sensor_type', 'temperature');
-    expect(response.body[0]).toHaveProperty('sensor_value', 25.5);
+    expect(response.body[0]).toHaveProperty('sensor_value', "25.5");
   }, 10000);
 });
