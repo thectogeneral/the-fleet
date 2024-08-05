@@ -7,7 +7,7 @@ const sensorDataSchema = Joi.object({
   vehicle_id: Joi.string().required(),
   timestamp: Joi.date().required(),
   sensor_type: Joi.string().required(),
-  sensor_value: Joi.number().required()
+  sensor_value: Joi.string().required()
 });
 
 const insertSensorData = async (req, res) => {

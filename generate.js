@@ -3,10 +3,10 @@ const axios = require('axios');
 
 const generateMockSensorData = () => {
   return {
-    vehicle_id: faker.string.uuid(), // Use faker.string.uuid() for UUIDs
+    vehicle_id: faker.string.uuid(), 
     timestamp: new Date().toISOString(),
-    sensor_type: faker.helpers.arrayElement(['temperature', 'speed', 'location']), // Use faker.helpers.arrayElement()
-    sensor_value: faker.number.float({ min: 0, max: 100 }), // Use faker.number.float() for numbers
+    sensor_type: faker.helpers.arrayElement(['GPS', 'Speed', 'Fuel Level']), 
+    sensor_value: faker.number.float({ min: 0, max: 100 }).toString(), 
   };
 };
 
