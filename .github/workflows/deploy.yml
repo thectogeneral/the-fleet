@@ -69,7 +69,7 @@ jobs:
               sudo rm /etc/nginx/sites-enabled/default || true
               echo '
               server {
-                  listen 8080;
+                  listen 80;
 
                   location / {
                       proxy_pass http://localhost:3000;
@@ -100,7 +100,7 @@ jobs:
 
             # Deployment commands
             cd ~/fleet-managment-system
-            npm install  # Install project dependencies
+            npm install
             pm2 stop all || true
             pm2 start index.js
           EOF
