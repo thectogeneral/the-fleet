@@ -14,6 +14,8 @@ variable "aws_secret_key" {}
 variable "db_name" {}
 variable "db_username" {}
 variable "db_password" {}
+variable "db_identifier" {}
+
 
 # Provider configuration
 provider "aws" {
@@ -130,6 +132,7 @@ resource "aws_instance" "app_server" {
 
 # Create a PostgreSQL RDS Instance
 resource "aws_db_instance" "postgres" {
+  identifier           = var.db_identifier
   allocated_storage    = 20
   engine               = "postgres"
   engine_version       = "16.3"

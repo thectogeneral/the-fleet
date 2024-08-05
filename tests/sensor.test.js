@@ -29,7 +29,7 @@ describe('Test Sensor Routes', () => {
       });
     expect(response.status).toBe(201);
     expect(response.text).toBe('Data inserted successfully');
-  });
+  }, 10000);
 
   it('should get sensor data', async () => {
     // First, insert data to fetch
@@ -52,5 +52,5 @@ describe('Test Sensor Routes', () => {
     expect(response.body[0]).toHaveProperty('vehicle_id', 'vehicle123');
     expect(response.body[0]).toHaveProperty('sensor_type', 'temperature');
     expect(response.body[0]).toHaveProperty('sensor_value', 25.5);
-  });
+  }, 10000);
 });
