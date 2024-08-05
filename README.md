@@ -117,6 +117,12 @@ Insert Sensor Data
     Validation error: <error_message>
     ```
 
+  - 500 Internal Server Error
+
+    ```text
+    Internal server error
+    ```
+
 Get Sensor Data
 
 - Endpoint: `GET /sensor-data`
