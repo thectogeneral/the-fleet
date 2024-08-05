@@ -14,10 +14,9 @@ A Fleet Management System to collect, store, and process data from field sensors
 - [CI/CD Pipeline Setup with GitHub Actions](#cicd-pipeline-setup-with-github-actions)
 - [Running the CI/CD Pipeline](#running-the-cicd-pipeline)
 
-
 ## Introduction
 
-This readme file provides the basic setup of this repository Fleet Management System locally, deploying an infrastructure to run the project using Terraform and setting up a  pipeline using GitHub Actions for Continuous Integration and Deployment to the deploy Terraform Infrastructure.
+This readme file provides the basic setup of this repository Fleet Management System locally, deploying an infrastructure to run the project using Terraform and setting up a pipeline using GitHub Actions for Continuous Integration and Deployment to the deploy Terraform Infrastructure.
 
 ## Prerequisites
 
@@ -38,9 +37,9 @@ This readme file provides the basic setup of this repository Fleet Management Sy
 
 2. **Install Dependencies:**
 
-    ```sh
-      npm install
-    ```
+   ```sh
+     npm install
+   ```
 
 3. **Create Environment Variables File:**
 
@@ -48,13 +47,13 @@ Create a .env file in the root directory from the .env.example file provided in 
 
     ```env
     NODE_ENV=
-    
+
     // for local environment
     LOCAL_DB_USERNAME=
     LOCAL_DB_PASSWORD=
     LOCAL_DB_NAME=
     LOCAL_DB_HOST=
-    
+
     // for production environment
     DB_USERNAME=
     DB_PASSWORD=
@@ -68,7 +67,6 @@ Create a .env file in the root directory from the .env.example file provided in 
 1. **Start the Server:**
 
 Complete the `.env` file by inputting the necessary value for each variable
-
 
     ```sh
     npm start
@@ -96,14 +94,14 @@ Insert Sensor Data
 - Description: This inserts new sensor data.
 - Request Body:
 
-    ```json
-    {
-      "vehicle_id": "vehicle123",
-      "timestamp": "2024-08-04T12:00:00Z",
-      "sensor_type": "temperature",
-      "sensor_value": 25.5
-    }
-    ```
+  ```json
+  {
+    "vehicle_id": "vehicle123",
+    "timestamp": "2024-08-04T12:00:00Z",
+    "sensor_type": "temperature",
+    "sensor_value": 25.5
+  }
+  ```
 
 - Response:
 
@@ -117,12 +115,6 @@ Insert Sensor Data
 
     ```text
     Validation error: <error_message>
-    ```
-
-  - 500 Internal Server Error
-
-    ```text
-    Internal server error
     ```
 
 Get Sensor Data
@@ -165,7 +157,7 @@ Follow the official [Terraform installation](https://developer.hashicorp.com/ter
 
 2. **Create Variables File:**
 
-Navigate to the `infra-setup/vm-setup` directory 
+Navigate to the `infra-setup/vm-setup` directory
 
     ```sh
     cd infra-setup/vm-setup
@@ -188,6 +180,7 @@ Initialize Terraform:
     ```sh
     terraform init
     ```
+
 > Make sure you have an SSH public key file (`~/.ssh/id_rsa.pub`) on your local machine or generate one using `ssh-keygen` before running the next commands
 
 Plan and Apply Infrastructure:
@@ -206,7 +199,6 @@ Confirm the apply step by typing yes when prompted.
 After following the instructions above to initialize, plan, and apply the Terraform configuration, Verify that the EC2 instance is up and running in the AWS Management Console under the specified region.
 
 > Note that a key will be downloaded to the `infra-setup/vm-setup` folder. This will be used to access your ec2 instance
-
 
 ## CI/CD Pipeline Setup with GitHub Actions
 
@@ -231,5 +223,3 @@ To setup your project pipeline with GitHub actions, go to your repository on Git
 1. **Trigger Workflow:**
 
 Push changes to the `master` branch or open a pull request against the `master` branch to trigger the workflow. You can also trigger the workflow manually in the GitHub actions tab.
-
-
