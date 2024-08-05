@@ -1,4 +1,4 @@
-name: Fleet Monitoring System
+name: Fleet Monitoring system
 
 on:
   push:
@@ -29,19 +29,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Check Docker version
-        run: docker --version
-
       - name: Create PostgreSQL database
         run: |
-          docker run -d \
-            --name postgres-db \
+          docker run -d --name postgres-db \
             -e POSTGRES_DB=${{ secrets.DB_NAME }} \
             -e POSTGRES_USER=${{ secrets.DB_USERNAME }} \
             -e POSTGRES_PASSWORD=${{ secrets.DB_PASSWORD }} \
             -p 5432:5432 \
             postgres:latest
-          # Wait for the database to start
           sleep 20
 
       - name: Prepare SSH
