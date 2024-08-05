@@ -29,7 +29,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install dependencies
+      - name: Create PostgreSQL database
+        run: |
+          docker run -d --name postgres-db -e POSTGRES_DB=${{ secrets.TEST_DB_NAME }} -e POSTGRES_USER=${{ secrets.TEST_DB_USERNAME }} -e POSTGRES_PASSWORD=${{ secrets.TEST_DB_PASSWORD }} -p 5432:5432 postgres:latest
+          sleep 20
+
+      - name: Run tests
+        env:
+          DB_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+          DB_NAME: ${{ secrets.TEST_DB_NAME }}
+          DB_HOST: localhost
+          DB_PORT: 5432
+          NODE_ENV: test
         run: npm test
 
       - name: Prepare SSH
