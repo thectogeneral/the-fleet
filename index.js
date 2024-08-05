@@ -10,7 +10,7 @@ app.use(express.json());
 app.use("/api/v1", sensorRouter);
 
 app.get('/', (req, res) => {
-    res.send("Hello, World");
+    res.send("Fleet Managment System");
 });
 
 const PORT = process.env.PORT || 3000;

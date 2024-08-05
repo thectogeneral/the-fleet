@@ -16,7 +16,6 @@ variable "db_username" {}
 variable "db_password" {}
 variable "db_identifier" {}
 
-
 # Provider configuration
 provider "aws" {
   access_key = var.aws_access_key
@@ -82,8 +81,8 @@ resource "aws_security_group" "main" {
   }
 
   ingress {
-    from_port   = 433
-    to_port     = 433
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -110,13 +109,31 @@ resource "aws_security_group" "main" {
   }
 }
 
+# Generate a TLS private key
+resource "tls_private_key" "example" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+# Create an EC2 Key Pair
+resource "aws_key_pair" "deployer" {
+  key_name   = "powerlabs-key"
+  public_key = tls_private_key.example.public_key_openssh
+}
+
+# Save the private key locally
+resource "local_file" "private_key" {
+  content  = tls_private_key.example.private_key_pem
+  filename = "${path.module}/powerlabs-key.pem"
+}
+
 # Create an EC2 Instance
 resource "aws_instance" "app_server" {
-  ami           = "ami-04a81a99f5ec58529"
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.main[0].id
-  vpc_security_group_ids     = [aws_security_group.main.id]
-
+  ami                         = "ami-04a81a99f5ec58529"
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.main[0].id
+  vpc_security_group_ids      = [aws_security_group.main.id]
+  key_name                    = aws_key_pair.deployer.key_name
   associate_public_ip_address = true
 
   tags = {
