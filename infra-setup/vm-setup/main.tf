@@ -21,12 +21,6 @@ variable "aws_secret_key" {
   sensitive   = true
 }
 
-variable "aws_region" {
-  description = "AWS region"
-  type        = string
-  sensitive   = true
-}
-
 variable "db_name" {
   description = "Database name"
   type        = string
@@ -50,6 +44,11 @@ variable "db_identifier" {
   sensitive   = true
 }
 
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+  sensitive   = true
+}
 
 # Provider configuration
 provider "aws" {

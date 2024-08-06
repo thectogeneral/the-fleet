@@ -6,7 +6,8 @@
     "test": "jest",
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "build": "node index.js"
+    "build": "node index.js",
+    "generate": "node generate.js"
   },
   "author": "",
   "license": "ISC",

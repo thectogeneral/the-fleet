@@ -155,6 +155,14 @@ Get Sensor Data
   ]
   ```
 
+### Mock DATA
+
+To stream mock data in to the server, set the SERVER_HOT enviroment variable and run the `generate.js` script in the root directory of the project
+
+    ```sh
+    npm generate
+    ```
+
 ## Infrastructure Setup with Terraform
 
 1. **Install Terraform:**
@@ -214,7 +222,7 @@ To setup your project pipeline with GitHub actions, go to your repository on Git
 
 - `AWS_ACCESS_KEY`: Your AWS access key.
 - `AWS_SECRET_KEY`: Your AWS secret key.
-- `EC2_SSH_KEY`: Your EC2 SSH private key.
+- `EC2_SSH_KEY`: Your EC2 SSH private key. This key will automatically be downloaded in the `infra-setup/vm-set` directory, when the terraform script is run
 - `EC2_USER`: Your EC2 username.
 - `EC2_HOST`: Your EC2 host.
 - `NODE_ENV`: // this should be production
