@@ -107,7 +107,7 @@ jobs:
 
             if ! command -v forever &> /dev/null; then
               echo "forver could not be found, installing..."
-              npm install -g forever
+              sudo npm install -g forever
             fi
 
             # Deployment commands
