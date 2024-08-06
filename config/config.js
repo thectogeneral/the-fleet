@@ -7,11 +7,6 @@ module.exports = {
     database: process.env.LOCAL_DB_NAME,
     host: process.env.LOCAL_DB_HOST,
     dialect: 'postgres',
-    dialectOptions: {
-      ssl: {
-        require: false,
-      },
-    },
   },
 
   test: {
@@ -20,11 +15,6 @@ module.exports = {
     database: process.env.TEST_DB_NAME,
     host: process.env.TEST_DB_HOST,
     dialect: 'postgres',
-    dialectOptions: {
-      ssl: {
-        require: false,
-      },
-    },
   },
   
   production: {

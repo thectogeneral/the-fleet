@@ -10,7 +10,7 @@ const sequelize = new Sequelize({
   password:envConfig.password, 
   host: envConfig.host,
   dialect: envConfig.dialect,
-  dialectOptions: envConfig.dialectOptions
+  dialectOptions: envConfig.dialectOptions || null
 });
 
 const db = {};
