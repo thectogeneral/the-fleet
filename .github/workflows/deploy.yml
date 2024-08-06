@@ -32,10 +32,7 @@ jobs:
       - name: Create PostgreSQL database
         shell: bash
         run: |
-          export POSTGRES_DB=${{ secrets.TEST_DB_NAME }}
-          export POSTGRES_USER=${{ secrets.TEST_DB_USERNAME }}
-          export POSTGRES_PASSWORD=${{ secrets.TEST_DB_PASSWORD }}
-          docker run -d --name postgres-db -e POSTGRES_DB=$POSTGRES_DB -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -p 5432:5432 postgres:latest
+          docker run -d --name postgres-db -e POSTGRES_DB=test_db -e POSTGRES_USER=test_user -e POSTGRES_PASSWORD=test_password -p 5432:5432 postgres:latest
           sleep 30
           docker ps -a
           docker logs postgres-db
@@ -43,11 +40,11 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-          export DB_USERNAME=${{ secrets.TEST_DB_USERNAME }}
-          export DB_PASSWORD=${{ secrets.TEST_DB_PASSWORD }}
-          export DB_NAME=${{ secrets.TEST_DB_NAME }}
-          export DB_HOST=localhost
-          export DB_PORT=5432
+          export TEST_DB_USERNAME=test_user
+          export TEST_DB_PASSWORD=test_password
+          export TEST_DB_NAME=test_db
+          export TEST_DB_HOST=localhost
+          export TEST_DB_PORT=5432
           export NODE_ENV=test
           npm test
 
