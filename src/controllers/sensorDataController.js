@@ -14,7 +14,7 @@ const insertSensorData = async (req, res) => {
   const { vehicle_id, timestamp, sensor_type, sensor_value } = req.body;
 
   // Validate request body
-  const { error } = sensorDataSchema.validate({ vehicle_id, timestamp, sensor_type, sensor_value });
+  const { error } = sensorDataSchema.validate({ vehicle_id, timestamp, sensor_type, sensor_value: sensor_value.toString()});
   if (error) {
     return res.status(400).send(`Validation error: ${error.details[0].message}`);
   }

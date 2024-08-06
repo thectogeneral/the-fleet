@@ -10,11 +10,10 @@ app.use(express.json());
 app.use('/sensor-data', sensorRouter);
 
 beforeAll(async () => {
-  await sequelize.sync({ force: true }); // Ensure the database is in a clean state
+  await sequelize.sync({ force: true }); 
 }, 50000);
 
 beforeEach(async () => {
-  // Clear all data before each test
   await sequelize.sync({ force: true });
   
 }, 10000);
@@ -39,7 +38,6 @@ describe('Test Sensor Routes', () => {
   }, 10000);
 
   it('should get sensor data', async () => {
-    // First, insert data to fetch
     await request(app)
       .post('/sensor-data')
       .send({
