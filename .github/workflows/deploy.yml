@@ -114,5 +114,5 @@ jobs:
             cd ~/fleet-managment-system
             npm install
             pm2 stop all || true
-            pm2 start npm -- start
+            pm2 start index.js
           EOF
