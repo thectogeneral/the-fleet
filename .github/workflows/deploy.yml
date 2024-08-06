@@ -36,7 +36,9 @@ jobs:
           export POSTGRES_USER=${{ secrets.TEST_DB_USERNAME }}
           export POSTGRES_PASSWORD=${{ secrets.TEST_DB_PASSWORD }}
           docker run -d --name postgres-db -e POSTGRES_DB=$POSTGRES_DB -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -p 5432:5432 postgres:latest
-          sleep 20
+          sleep 30
+          docker ps -a
+          docker logs postgres-db
 
       - name: Run tests
         shell: bash
