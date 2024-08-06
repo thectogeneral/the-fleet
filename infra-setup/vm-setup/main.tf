@@ -171,7 +171,7 @@ resource "aws_instance" "app_server" {
   associate_public_ip_address = true
 
   tags = {
-    Name = "AppServer"
+    Name = "Terraform Server"
   }
 
   user_data = <<-EOF

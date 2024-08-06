@@ -35,3 +35,14 @@ The real-time data processing system consists of a lot of components,in which ea
 4. Security:
 
 - To secure the API endpoints authentication and authorization mechanisms can be used to prevent unauthorized access to sensitive data. Also we can consider the use of HTTPS to encrypt data in transit.
+
+## Application Design Enhancement and Optimization
+
+- Authentication to secure APIs
+- Monitoring and Logging to visualize data
+- Load Balancing to avoid the server overload
+- Data Validation before entry into the database
+
+### DevOps
+
+- Having multiple enviroment for project testing before production(testing, stagging, production)
