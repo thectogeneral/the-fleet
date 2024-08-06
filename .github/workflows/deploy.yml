@@ -32,12 +32,7 @@ jobs:
       - name: Create PostgreSQL database
         shell: bash
         run: |
-          docker run -d \
-            --name postgres-db \
-            -e POSTGRES_DB=${{ secrets.TEST_DB_NAME }} \
-            -e POSTGRES_USER=${{ secrets.TEST_DB_USERNAME }} \
-            -e POSTGRES_PASSWORD=${{ secrets.TEST_DB_PASSWORD }} \
-            -p 5432:5432 postgres:latest
+          docker run -d --name postgres-db -e POSTGRES_DB=${{ secrets.TEST_DB_NAME }} -e POSTGRES_USER=${{ secrets.TEST_DB_USERNAME }} -e POSTGRES_PASSWORD=${{ secrets.TEST_DB_PASSWORD }} -p 5432:5432 postgres:latest
           sleep 20
 
       - name: Run tests
