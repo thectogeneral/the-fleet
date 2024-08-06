@@ -40,14 +40,14 @@ jobs:
 
       - name: Run tests
         shell: bash
-        env:
-          DB_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
-          DB_NAME: ${{ secrets.TEST_DB_NAME }}
-          DB_HOST: localhost
-          DB_PORT: 5432
-          NODE_ENV: test
-        run: npm test
+        run: |
+          export DB_USERNAME=${{ secrets.TEST_DB_USERNAME }}
+          export DB_PASSWORD=${{ secrets.TEST_DB_PASSWORD }}
+          export DB_NAME=${{ secrets.TEST_DB_NAME }}
+          export DB_HOST=localhost
+          export DB_PORT=5432
+          export NODE_ENV=test
+          npm test
 
       - name: Prepare SSH
         run: |
